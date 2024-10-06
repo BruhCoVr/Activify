@@ -30,6 +30,7 @@
     </div>
 
     <div class="container" id="cardContainer">
+      <!-- Static countdown input -->
       <div class="countdown-inputs">
         <div class="mb-3">
           <label for="hoursInput">Hours:</label>
@@ -58,17 +59,21 @@
             style="width: 100px; display: inline-block"
           />
         </div>
-        <button class="btn btn-primary startCountdownBtn">Start Countdown</button>
+        <button class="btn btn-primary startCountdownBtn" onclick="navigateToPage()">
+            Start Countdown
+        </button>
         <p class="mt-3 demo">Countdown Display</p>
       </div>
     </div>
-
+    
+    <!-- Audio alert for when the countdown ends -->
     <audio
       id="alertSound"
       src="{{ url_for('static', filename='end-sound.mp3') }}"
       preload="auto"
     ></audio>
 
+    <!-- Scripts for functionality -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -110,6 +115,10 @@
                 </div>
                 <button class="btn btn-primary startCountdownBtn">Start</button>
                 <p class="mt-3 demo">Countdown Display</p>
+
+                <!-- Embed Spotify iframe within the card -->
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/42VEJ82fOlDEFW6nMyoFtR?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
           `;
           cardContainer.appendChild(newCard);
