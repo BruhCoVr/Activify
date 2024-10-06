@@ -102,11 +102,14 @@
         if (activityName) { // check if the user entered an activity name
           const newCard = document.createElement("div");
           newCard.classList.add("card", "mb-3");
-          newCard.innerHTML = ` // set the inner HTML of the new card
+          // set the inner HTML of the new card
+          // display the activity name entered by the user
+          //make a section for countdown inputs inside the card
+          newCard.innerHTML = ` 
             <button class="resize-btn">
                 <i class="fas fa-plus"></i>
             </button>
-            <p>${activityName}</p> // display the activity name entered by the user
+            <p>${activityName}</p> 
 
             <div class="countdown-inputs"> //make a section for countdown inputs inside the card
                 <div class="mb-3">
