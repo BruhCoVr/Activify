@@ -18,19 +18,20 @@
     />
   </head>
   <body>
+    <!--top navigation bar-->
     <div class="top-bar">
       <div class="title">Activify</div>
-      <div class="hamburger" id="hamburger">
-        &#9776;
-      </div>
+      <div class="hamburger" id="hamburger">&#9776;</div>
       <div class="menu" id="menu">
         <a href="#" id="addActivity">Add Activity</a>
         <a href="#item2">Item 2</a>
       </div>
     </div>
 
+    <!--The Activity card that comes up when "Add Activity" is selected 
+    from the hamburger drop down menu-->
     <div class="container" id="cardContainer">
-      <!-- Static countdown input -->
+      <!--inputs for hour, minutes, and seconds for the timer-->
       <div class="countdown-inputs">
         <div class="mb-3">
           <label for="hoursInput">Hours:</label>
@@ -59,26 +60,31 @@
             style="width: 100px; display: inline-block"
           />
         </div>
-        <button class="btn btn-primary startCountdownBtn" onclick="navigateToPage()">
-            Start Countdown
+        <!--button to start the countdown after time has been selected-->
+        <button
+          class="btn btn-primary startCountdownBtn"
+          onclick="navigateToPage()"
+        >
+          Start Countdown
         </button>
+        <!--text will change to numbers doing a count down-->
         <p class="mt-3 demo">Countdown Display</p>
       </div>
     </div>
-    
-    <!-- Audio alert for when the countdown ends -->
+
+    <!--alarm sound for when the count down finishes-->
     <audio
       id="alertSound"
       src="{{ url_for('static', filename='end-sound.mp3') }}"
       preload="auto"
     ></audio>
 
-    <!-- Scripts for functionality -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-      // Hamburger menu toggle
+    
+    //toggles the visibility of the menu when the hamburger icon is clicked,
       document
         .getElementById("hamburger")
         .addEventListener("click", function () {
@@ -86,23 +92,23 @@
           menu.style.display = menu.style.display === "flex" ? "none" : "flex";
         });
 
-      // Add Activity Functionality
-      const cardContainer = document.getElementById("cardContainer");
-      const addActivityBtn = document.getElementById("addActivity");
+     
+      const cardContainer = document.getElementById("cardContainer"); //refers to cardContainer
+      const addActivityBtn = document.getElementById("addActivity"); //refers to the button to initiate the addition of new activities to the cardContainer.
 
       addActivityBtn.addEventListener("click", function () {
-        const activityName = prompt("Enter Activity Name");
+        const activityName = prompt("Enter Activity Name"); //takes user's input for activity name 
 
-        if (activityName) {
+        if (activityName) { // check if the user entered an activity name
           const newCard = document.createElement("div");
           newCard.classList.add("card", "mb-3");
-          newCard.innerHTML = `
+          newCard.innerHTML = ` // set the inner HTML of the new card
             <button class="resize-btn">
                 <i class="fas fa-plus"></i>
             </button>
-            <p>${activityName}</p>
+            <p>${activityName}</p> // display the activity name entered by the user
 
-            <div class="countdown-inputs">
+            <div class="countdown-inputs"> //make a section for countdown inputs inside the card
                 <div class="mb-3">
                     <label for="hoursInput">Hours:</label>
                     <input type="number" class="form-control hoursInput" min="0" style="width: 100px; display: inline-block;">
@@ -116,83 +122,95 @@
                 <button class="btn btn-primary startCountdownBtn">Start</button>
                 <p class="mt-3 demo">Countdown Display</p>
 
-                <!-- Embed Spotify iframe within the card -->
+                <!-- Embed Spotify playlist within the card under the timer-->
                 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/42VEJ82fOlDEFW6nMyoFtR?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen=""
                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
           `;
-          cardContainer.appendChild(newCard);
+          cardContainer.appendChild(newCard); // append the new card to the card container, where it will keep adding to the screen for every action
 
-          // Attach event listener for the resize button
-          newCard.querySelector(".resize-btn").addEventListener("click", function () {
-            newCard.classList.toggle("enlarged");
-          });
+          //resize button within the new card
+          newCard
+            .querySelector(".resize-btn")
+            .addEventListener("click", function () {
+              newCard.classList.toggle("enlarged");
+            });
 
-          // Attach event listener for the countdown button
-          newCard.querySelector(".startCountdownBtn").addEventListener("click", function () {
-            toggleCountdown(newCard);
-          });
+          //listen to the countdown button within the new card
+          newCard
+            .querySelector(".startCountdownBtn")
+            .addEventListener("click", function () {
+              toggleCountdown(newCard);
+            });
         }
       });
 
       let countdownTimer;
-      let totalSeconds = 0; // Store total seconds for the countdown
-      let isPaused = true; // Start in a paused state
+      let totalSeconds = 0; 
+      let isPaused = true; 
 
       function toggleCountdown(card) {
+        //related to the countdown within the specified card
         const demoDisplay = card.querySelector(".demo");
         const hoursInput = card.querySelector(".hoursInput");
         const minutesInput = card.querySelector(".minutesInput");
         const secondsInput = card.querySelector(".secondsInput");
         const startButton = card.querySelector(".startCountdownBtn");
 
-        // If not paused, start the countdown
+        //check if countdown is paused
         if (isPaused) {
-          // Get input values if starting for the first time
+          //starting countdown for the first time
           if (totalSeconds === 0) {
+            //get the input values, default to 0 if not a valid number
             const hours = parseInt(hoursInput.value) || 0;
             const minutes = parseInt(minutesInput.value) || 0;
             const seconds = parseInt(secondsInput.value) || 0;
 
-            // Calculate total seconds
+            //calculate total seconds from adding input
             totalSeconds = hours * 3600 + minutes * 60 + seconds;
           }
 
-          startButton.innerText = "Stop"; // Change button text to "Stop"
+          //change button text to "stop" when countdown is taking place
+          startButton.innerText = "Stop"; 
           countdownTimer = setInterval(function () {
+            //check if countdown has reached 0
             if (totalSeconds <= 0) {
-              clearInterval(countdownTimer);
-              demoDisplay.innerHTML = "TIME'S UP!";
-              playAlertSound();
-              totalSeconds = 0; // Reset total seconds
-              startButton.innerText = "Start"; // Reset button text
+              clearInterval(countdownTimer); //stop countdown
+              demoDisplay.innerHTML = "TIME'S UP!"; //update display message
+              playAlertSound(); //play alarm
+              totalSeconds = 0; //reset total seconds
+              startButton.innerText = "Start"; //reset button text to "start"
               return;
             }
 
+            //calculate hours, minutes, and seconds from total seconds
             const hrs = Math.floor(totalSeconds / 3600);
             const mins = Math.floor((totalSeconds % 3600) / 60);
             const secs = totalSeconds % 60;
 
+            //update display with remaining time
             demoDisplay.innerHTML = `${hrs}h ${mins}m ${secs}s `;
-            totalSeconds--; // Decrement the total seconds
-          }, 1000);
+            totalSeconds--; 
+          }, 1000); //update every second
         } else {
-          clearInterval(countdownTimer); // Stop the countdown
-          startButton.innerText = "Start"; // Change button text to "Start"
+          clearInterval(countdownTimer); //stop timer if it's running
+          startButton.innerText = "Start"; //change button text back to "Start"
         }
 
-        isPaused = !isPaused; // Toggle the pause state
+        isPaused = !isPaused; //toggle pause state
       }
 
       function playAlertSound() {
+        //get audio element
         const alertSound = document.getElementById("alertSound");
+        //play the alarm sound
         alertSound.play();
 
-        // Stop the sound after 5 seconds
+        //stop alarm after 5 seconds
         setTimeout(() => {
-          alertSound.pause(); // Pause the audio
-          alertSound.currentTime = 0; // Reset the audio to the start
-        }, 5000); // 5000 milliseconds = 5 seconds
+          alertSound.pause(); 
+          alertSound.currentTime = 0; 
+        }, 5000); 
       }
     </script>
   </body>
