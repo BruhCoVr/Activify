@@ -1,12 +1,10 @@
-from kivymd.app import MDApp
-from kivymd.uix.label import MDLabel
+from flask import Flask, render_template
 
+app = Flask(__name__)
 
-class MainApp(MDApp):
-    def build(self):
-        return MDLabel(text="Hello, World", halign="center")
+@app.route("/")
+def home():
+    return render_template('index.html')
 
-
-
-#hi
-MainApp().run()
+if __name__ == '__main__':
+    app.run(debug=True)

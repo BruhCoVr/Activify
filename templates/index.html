@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Dropdown Menu</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#">My Flask App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Menu
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Item 1</a>
+                        <a class="dropdown-item" href="#">Item 2</a>
+                        <a class="dropdown-item" href="#">Item 3</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1>Welcome to My Flask App</h1>
+        <p>This is a simple example of a dropdown menu using Flask and Bootstrap.</p>
+
+        <div class="mb-3">
+            <label for="hoursInput">Hours:</label>
+            <input type="number" id="hoursInput" class="form-control" min="0" style="width: 100px; display: inline-block;">        
+
+            <label for="minutesInput">Minutes:</label>
+            <input type="number" id="minutesInput" class="form-control" min="0" max="59" style="width: 100px; display: inline-block;">
+        
+            <label for="secondsInput">Seconds:</label>
+            <input type="number" id="secondsInput" class="form-control" min="0" max="59" style="width: 100px; display: inline-block;">
+            
+        </div>
+        <button class="btn btn-primary" onclick="startCountdown()">Start Countdown</button>
+
+        <!-- Display the countdown timer -->
+        <p id="demo" class="mt-3"></p>
+    </div>
+
+    <script>
+        let countdownTimer;
+
+        function startCountdown() {
+            // Clear any existing countdown
+            clearInterval(countdownTimer);
+
+            // Get the user input values
+            const hours = parseInt(document.getElementById("hoursInput").value) || 0;
+            const minutes = parseInt(document.getElementById("minutesInput").value) || 0;
+            const seconds = parseInt(document.getElementById("secondsInput").value) || 0;
+
+            // Calculate total time in seconds
+            let totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
+
+            // Update the count down every 1 second
+            countdownTimer = setInterval(function() {
+                if (totalSeconds <= 0) {
+                    clearInterval(countdownTimer);
+                    document.getElementById("demo").innerHTML = "TIME'S UP!";
+                    return;
+                }
+
+                // Time calculations
+                const hrs = Math.floor(totalSeconds / 3600);
+                const mins = Math.floor((totalSeconds % 3600) / 60);
+                const secs = totalSeconds % 60;
+
+                // Display the result in the element with id="demo"
+                document.getElementById("demo").innerHTML = hrs + "h " + mins + "m " + secs + "s ";
+
+                // Decrement the total seconds
+                totalSeconds--;
+            }, 1000);
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

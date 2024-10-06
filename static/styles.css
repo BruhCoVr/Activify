@@ -1,0 +1,23 @@
+/* static/styles.css */
+body {
+    background-color: #FFF9E9;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    margin-bottom: 20px;
+    color: #103356;
+}
+
+.navbar a {
+    color: #103356; /* Change text color to white for contrast */
+}
+
+
+nav {
+    color: #103356;
+}
+
+h1 {
+    color: #343a40;
+}
