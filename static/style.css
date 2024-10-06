@@ -1,0 +1,80 @@
+
+
+p {
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+body {
+    background-color: #f7f2fa;
+    font-family: Arial, sans-serif;
+    margin: 0; /* Remove default margin */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #ff7355; /* Match the card color or choose another */
+    position: sticky; /* Stick the navbar to the top */
+    top: 0; /* Keep it at the top */
+    z-index: 1000; /* Ensure it sits above other content */
+}
+
+.white-icon {
+    color: white; /* Make the icon white */
+}
+
+/* Container Styles */
+.container {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    height: calc(100vh - 56px); /* Full height minus navbar height */
+    padding-top: 20px; /* Optional: space from the top */
+}
+
+.card {
+    padding: 20px;
+    width: 95vw; /* Full width of the viewport */
+    background-color: #ff7355;
+    border-radius: 10px;
+    text-align: left; /* Align text to the left */
+    position: relative; /* Allows absolute positioning of children */
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Optional: Add shadow for better visibility */
+    margin: 0; /* Remove any default margin */
+}
+
+.card.enlarged {
+    height: auto; /* Height will expand based on content */
+}
+
+.resize-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: white;
+    outline: none;
+}
+
+/* Countdown Inputs Styles */
+.countdown-inputs {
+    display: none; /* Hide by default */
+    margin-top: 10px; /* Space between title and inputs */
+}
+
+.card.enlarged .countdown-inputs {
+    display: block; /* Show when enlarged */
+}
+
+/* Styles for the countdown timer display */
+#demo {
+    color: white;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
